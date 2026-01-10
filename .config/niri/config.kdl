@@ -10,6 +10,11 @@ environment {
 	LC_MESSAGES "zh_CN.UTF-8"
 	XMODIFIERS "@im=fcitx"
 }
+cursor {
+	xcursor-theme "breeze_cursors"
+	xcursor-size 27
+	hide-after-inactive-ms 15000
+}
 input {
     keyboard {
         xkb {
@@ -70,7 +75,7 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
 // You can configure outputs by their name, which you can find
@@ -169,7 +174,7 @@ layout {
         // off
 
         // How many logical pixels the ring extends out from the windows.
-        width 4
+        width 3
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -177,7 +182,7 @@ layout {
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
         // Color of the ring on the active monitor.
-        active-color "#7fc8ff"
+        active-color "#f0f0f0cc"
 
         // Color of the ring on inactive monitors.
         //
@@ -278,8 +283,10 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "waybar"
+//spawn-at-startup "waybar"
+spawn-at-startup "qs" "-c" "noctalia-shell"
 spawn-at-startup "swww-daemon"
+spawn-sh-at-startup "clipse --listen"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-at-startup "mako"
 spawn-at-startup "fcitx5"
@@ -300,7 +307,7 @@ hotkey-overlay {
 // Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
 // This option will also fix border/focus ring drawing behind some semitransparent windows.
 // After enabling or disabling this, you need to restart the apps for this to take effect.
-// prefer-no-csd
+prefer-no-csd
 
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
@@ -341,6 +348,7 @@ window-rule {
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="clipse-gui"
     open-floating true
 }
 
@@ -358,9 +366,11 @@ window-rule {
 
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
+window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
+    opacity 0.99
+    draw-border-with-background false
 }
 
 binds {
@@ -641,4 +651,5 @@ binds {
     Mod+F1 {spawn-sh "pkill fcitx5 || fcitx5";}
     Mod+E {spawn "nautilus";}
     Mod+F2 {spawn-sh "pkill waybar || true && waybar";}
+    Mod+Alt+V {spawn "clipse-gui";}
 }
