@@ -290,7 +290,6 @@ spawn-sh-at-startup "clipse --listen"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-at-startup "mako"
 spawn-at-startup "fcitx5"
-spawn-at-startup "~/.config/niri/scripts/swayidle.sh"
 
 
 
@@ -391,7 +390,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "kitty" "-e" "fish"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Super+ALT+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Super+ALT+L hotkey-overlay-title="Lock the Screen" { spawn-sh "qs -c noctalia-shell ipc call sessionMenu lockAndSuspend"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
